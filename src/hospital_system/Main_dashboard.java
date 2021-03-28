@@ -1,0 +1,936 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package hospital_system;
+
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GraphicsEnvironment;
+import java.awt.Point;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Vector;
+import javax.swing.BorderFactory;
+import javax.swing.JLabel;
+import javax.swing.JTable;
+import javax.swing.border.EtchedBorder;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+
+/**
+ *
+ * @author godfr
+ */
+public class Main_dashboard extends javax.swing.JFrame {
+
+    /**
+     * Creates new form Main_dashboard
+     */
+    Connection conn = new dbConnect().dbcon();
+    
+    public Main_dashboard() {
+        initComponents();
+        centerFrame();
+        go_home();
+        
+        btn_checkout.setVisible(false);
+        
+        initTableManage();
+        initTableDashboard();
+        initTableHistory();
+    }
+    
+    private void initTableManage(){
+        defaultTable(table_manage);
+        
+        Statement st;
+        ResultSet rs;
+        try {
+
+            DefaultTableModel dt = (DefaultTableModel) table_manage.getModel();
+            dt.setRowCount(0);
+
+            st = (Statement) conn.createStatement();
+            String sql = "SELECT * FROM patient";
+            rs = st.executeQuery(sql);
+
+            while (rs.next()) {
+                dt.addRow(new Object[]{rs.getString("id"), rs.getString("name"), rs.getString("age"), rs.getString("weight"), rs.getString("height"), rs.getString("symptom"), rs.getString("tel")});
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+    private void initTableDashboard(){
+        defaultTable(table_dashboard);
+        
+        Statement st;
+        ResultSet rs;
+        try {
+
+            DefaultTableModel dt = (DefaultTableModel) table_dashboard.getModel();
+            dt.setRowCount(0);
+
+            st = (Statement) conn.createStatement();
+            String sql = "SELECT * FROM patient";
+            rs = st.executeQuery(sql);
+
+            while (rs.next()) {
+                dt.addRow(new Object[]{rs.getString("id"), rs.getString("name"), rs.getString("age"), rs.getString("weight"), rs.getString("height"), rs.getString("symptom"), rs.getString("tel")});
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+    private void initTableHistory(){
+        defaultTable(table_history);
+        
+        Statement st;
+        ResultSet rs;
+        try {
+
+            DefaultTableModel dt = (DefaultTableModel) table_history.getModel();
+            dt.setRowCount(0);
+
+            st = (Statement) conn.createStatement();
+            String sql = "SELECT * FROM history";
+            rs = st.executeQuery(sql);
+
+            while (rs.next()) {
+                dt.addRow(new Object[]{rs.getString("id"), rs.getString("name"), rs.getString("age"), rs.getString("weight"), rs.getString("height"), rs.getString("symptom"), rs.getString("tel")});
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+    
+    private void defaultTable(JTable table_name){
+        //Header column
+        JTableHeader theader = table_name.getTableHeader();
+        theader.setBackground(new Color(26, 1, 91));
+        theader.setForeground(Color.white);
+        theader.setFont(new Font("Sarabun", Font.PLAIN, 16));
+        theader.setBorder(BorderFactory.createBevelBorder(EtchedBorder.RAISED, new Color(26, 1, 91), new Color(26, 1, 91)));
+        
+        
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+        
+        for(int i=0;i<table_name.getColumnModel().getColumnCount();++i){
+            table_name.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);   
+        }
+        
+        table_name.setRowHeight(30);
+        table_name.setFont(new Font("Sarabun", Font.PLAIN, 12));
+    }
+    
+    public void centerFrame() {
+
+            Dimension windowSize = getSize();
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            Point centerPoint = ge.getCenterPoint();
+
+            int dx = centerPoint.x - windowSize.width / 2;
+            int dy = centerPoint.y - windowSize.height / 2;    
+            setLocation(dx, dy);
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        panel_dashboard = new javax.swing.JPanel();
+        btn_home2 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        table_dashboard = new javax.swing.JTable();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        input_tel = new javax.swing.JTextField();
+        input_symptom = new javax.swing.JTextField();
+        input_height = new javax.swing.JTextField();
+        input_weight = new javax.swing.JTextField();
+        input_age = new javax.swing.JTextField();
+        input_name = new javax.swing.JTextField();
+        btn_add = new javax.swing.JButton();
+        btn_checkout = new javax.swing.JButton();
+        panel_history = new javax.swing.JPanel();
+        btn_home1 = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        table_history = new javax.swing.JTable();
+        jLabel8 = new javax.swing.JLabel();
+        panel_manage = new javax.swing.JPanel();
+        btn_home = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        table_manage = new javax.swing.JTable();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        input_tel1 = new javax.swing.JTextField();
+        input_symptom1 = new javax.swing.JTextField();
+        input_height1 = new javax.swing.JTextField();
+        input_weight1 = new javax.swing.JTextField();
+        input_age1 = new javax.swing.JTextField();
+        input_id = new javax.swing.JTextField();
+        jLabel21 = new javax.swing.JLabel();
+        input_name1 = new javax.swing.JTextField();
+        btn_update = new javax.swing.JButton();
+        btn_delete = new javax.swing.JButton();
+        panel_menu = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        btn_manage = new javax.swing.JButton();
+        btn_dashboard = new javax.swing.JButton();
+        btn_history = new javax.swing.JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(1100, 750));
+        setResizable(false);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        panel_dashboard.setBackground(new java.awt.Color(212, 195, 254));
+        panel_dashboard.setMinimumSize(new java.awt.Dimension(1100, 750));
+        panel_dashboard.setPreferredSize(new java.awt.Dimension(1100, 750));
+        panel_dashboard.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                panel_dashboardMouseClicked(evt);
+            }
+        });
+        panel_dashboard.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btn_home2.setBackground(new java.awt.Color(212, 195, 254));
+        btn_home2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icons8_home_64px_1.png"))); // NOI18N
+        btn_home2.setBorder(null);
+        btn_home2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_home2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_home2MouseClicked(evt);
+            }
+        });
+        panel_dashboard.add(btn_home2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 50, 50));
+
+        table_dashboard.setFont(new java.awt.Font("Sarabun", 0, 11)); // NOI18N
+        table_dashboard.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "รหัสผู้ป่วย", "ชื่อ-สกุล", "อายุ", "น้ำหนัก", "ส่วนสูง", "อาการ", "เบอร์โทรติดต่อ"
+            }
+        ));
+        table_dashboard.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        table_dashboard.setFocusable(false);
+        table_dashboard.setOpaque(false);
+        table_dashboard.setRequestFocusEnabled(false);
+        table_dashboard.setSelectionBackground(new java.awt.Color(212, 195, 254));
+        table_dashboard.setShowHorizontalLines(false);
+        table_dashboard.setShowVerticalLines(false);
+        table_dashboard.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                table_dashboardMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(table_dashboard);
+        if (table_dashboard.getColumnModel().getColumnCount() > 0) {
+            table_dashboard.getColumnModel().getColumn(2).setMaxWidth(50);
+            table_dashboard.getColumnModel().getColumn(3).setMaxWidth(70);
+            table_dashboard.getColumnModel().getColumn(4).setMaxWidth(70);
+        }
+
+        panel_dashboard.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 760, 570));
+
+        jLabel6.setFont(new java.awt.Font("Sarabun", 0, 24)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("แดชบอร์ด");
+        panel_dashboard.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 50, 120, 50));
+
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/dashboard_title.png"))); // NOI18N
+        panel_dashboard.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 10, -1, 140));
+
+        jPanel1.setBackground(new java.awt.Color(26, 1, 91));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel7.setFont(new java.awt.Font("Sarabun", 0, 18)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("เพิ่มข้อมูลผู้ป่วย");
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 30, -1, -1));
+
+        jLabel3.setFont(new java.awt.Font("Sarabun", 0, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("น้ำหนัก");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, -1, -1));
+
+        jLabel9.setFont(new java.awt.Font("Sarabun", 0, 14)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setText(" ส่วนสูง");
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 220, 40, -1));
+
+        jLabel10.setFont(new java.awt.Font("Sarabun", 0, 14)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setText("  อายุ");
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 140, -1, -1));
+
+        jLabel11.setFont(new java.awt.Font("Sarabun", 0, 14)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setText("  อาการ");
+        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 260, -1, -1));
+
+        jLabel12.setFont(new java.awt.Font("Sarabun", 0, 14)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel12.setText("เบอร์โทรติดต่อ");
+        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, -1, -1));
+
+        jLabel13.setFont(new java.awt.Font("Sarabun", 0, 14)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel13.setText("ชื่อ-นามสกุล");
+        jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, -1, -1));
+
+        input_tel.setFont(new java.awt.Font("Sarabun", 0, 14)); // NOI18N
+        input_tel.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        input_tel.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 1));
+        jPanel1.add(input_tel, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 300, 150, 25));
+
+        input_symptom.setFont(new java.awt.Font("Sarabun", 0, 14)); // NOI18N
+        input_symptom.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        input_symptom.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 1));
+        jPanel1.add(input_symptom, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 260, 150, 25));
+
+        input_height.setFont(new java.awt.Font("Sarabun", 0, 14)); // NOI18N
+        input_height.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        input_height.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 1));
+        jPanel1.add(input_height, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 220, 150, 25));
+
+        input_weight.setFont(new java.awt.Font("Sarabun", 0, 14)); // NOI18N
+        input_weight.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        input_weight.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 1));
+        jPanel1.add(input_weight, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 180, 150, 25));
+
+        input_age.setFont(new java.awt.Font("Sarabun", 0, 14)); // NOI18N
+        input_age.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        input_age.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 1));
+        jPanel1.add(input_age, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 140, 150, 25));
+
+        input_name.setFont(new java.awt.Font("Sarabun", 0, 14)); // NOI18N
+        input_name.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        input_name.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 1));
+        jPanel1.add(input_name, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 98, 150, 25));
+
+        btn_add.setBackground(new java.awt.Color(153, 0, 153));
+        btn_add.setFont(new java.awt.Font("Sarabun", 0, 14)); // NOI18N
+        btn_add.setForeground(new java.awt.Color(255, 255, 255));
+        btn_add.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icons8_add_new_48px.png"))); // NOI18N
+        btn_add.setText(" เพิ่ม");
+        btn_add.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        btn_add.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_add.setFocusPainted(false);
+        btn_add.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_addMouseClicked(evt);
+            }
+        });
+        jPanel1.add(btn_add, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 350, 110, 50));
+
+        btn_checkout.setBackground(new java.awt.Color(0, 204, 0));
+        btn_checkout.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btn_checkout.setForeground(new java.awt.Color(255, 255, 255));
+        btn_checkout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icons8_cash_register_48px.png"))); // NOI18N
+        btn_checkout.setText("CHECKOUT");
+        btn_checkout.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_checkout.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_checkout.setFocusPainted(false);
+        btn_checkout.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_checkoutMouseClicked(evt);
+            }
+        });
+        jPanel1.add(btn_checkout, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 470, 170, 60));
+
+        panel_dashboard.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 170, 310, 570));
+
+        getContentPane().add(panel_dashboard, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1100, 750));
+
+        panel_history.setBackground(new java.awt.Color(212, 195, 254));
+        panel_history.setMinimumSize(new java.awt.Dimension(1100, 750));
+        panel_history.setPreferredSize(new java.awt.Dimension(1100, 750));
+        panel_history.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btn_home1.setBackground(new java.awt.Color(212, 195, 254));
+        btn_home1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icons8_home_64px_1.png"))); // NOI18N
+        btn_home1.setBorder(null);
+        btn_home1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_home1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_home1MouseClicked(evt);
+            }
+        });
+        panel_history.add(btn_home1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 50, 50));
+
+        table_history.setFont(new java.awt.Font("Sarabun", 0, 11)); // NOI18N
+        table_history.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "รหัสผู้ป่วย", "ชื่อ-สกุล", "อายุ", "น้ำหนัก", "ส่วนสูง", "อาการ", "เบอร์โทรติดต่อ"
+            }
+        ));
+        table_history.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        table_history.setFocusable(false);
+        table_history.setOpaque(false);
+        table_history.setRequestFocusEnabled(false);
+        table_history.setRowSelectionAllowed(false);
+        table_history.setSelectionBackground(new java.awt.Color(212, 195, 254));
+        table_history.setShowHorizontalLines(false);
+        table_history.setShowVerticalLines(false);
+        table_history.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                table_historyMouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(table_history);
+        if (table_history.getColumnModel().getColumnCount() > 0) {
+            table_history.getColumnModel().getColumn(2).setMaxWidth(50);
+            table_history.getColumnModel().getColumn(3).setMaxWidth(70);
+            table_history.getColumnModel().getColumn(4).setMaxWidth(70);
+        }
+
+        panel_history.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 1080, 640));
+
+        jLabel8.setFont(new java.awt.Font("Sarabun", 0, 24)); // NOI18N
+        jLabel8.setText("ผู้ป่วยที่เคยรักษา");
+        panel_history.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 30, -1, -1));
+
+        getContentPane().add(panel_history, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1100, 750));
+
+        panel_manage.setBackground(new java.awt.Color(212, 195, 254));
+        panel_manage.setMinimumSize(new java.awt.Dimension(1100, 750));
+        panel_manage.setPreferredSize(new java.awt.Dimension(1100, 750));
+        panel_manage.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                panel_manageMouseClicked(evt);
+            }
+        });
+        panel_manage.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btn_home.setBackground(new java.awt.Color(212, 195, 254));
+        btn_home.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icons8_home_64px_1.png"))); // NOI18N
+        btn_home.setBorder(null);
+        btn_home.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_home.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_homeMouseClicked(evt);
+            }
+        });
+        panel_manage.add(btn_home, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 50, 50));
+
+        jLabel2.setFont(new java.awt.Font("Sarabun", 0, 24)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("จัดการข้อมูลผู้ป่วย");
+        panel_manage.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 50, -1, -1));
+
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/manage_background_title2.png"))); // NOI18N
+        panel_manage.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, -10, -1, -1));
+
+        table_manage.setFont(new java.awt.Font("Sarabun", 0, 11)); // NOI18N
+        table_manage.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "รหัสผู้ป่วย", "ชื่อ-สกุล", "อายุ", "น้ำหนัก", "ส่วนสูง", "อาการ", "เบอร์โทรติดต่อ"
+            }
+        ));
+        table_manage.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        table_manage.setFocusable(false);
+        table_manage.setOpaque(false);
+        table_manage.setRequestFocusEnabled(false);
+        table_manage.setSelectionBackground(new java.awt.Color(212, 195, 254));
+        table_manage.setShowHorizontalLines(false);
+        table_manage.setShowVerticalLines(false);
+        table_manage.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                table_manageMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(table_manage);
+        if (table_manage.getColumnModel().getColumnCount() > 0) {
+            table_manage.getColumnModel().getColumn(2).setMaxWidth(50);
+            table_manage.getColumnModel().getColumn(3).setMaxWidth(70);
+            table_manage.getColumnModel().getColumn(4).setMaxWidth(70);
+        }
+
+        panel_manage.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 760, 570));
+
+        jPanel3.setBackground(new java.awt.Color(26, 1, 91));
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel14.setFont(new java.awt.Font("Sarabun", 0, 18)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel14.setText("เพิ่มข้อมูลผู้ป่วย");
+        jPanel3.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 30, -1, -1));
+
+        jLabel15.setFont(new java.awt.Font("Sarabun", 0, 14)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel15.setText("น้ำหนัก");
+        jPanel3.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 220, -1, -1));
+
+        jLabel16.setFont(new java.awt.Font("Sarabun", 0, 14)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel16.setText(" ส่วนสูง");
+        jPanel3.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 260, 40, -1));
+
+        jLabel17.setFont(new java.awt.Font("Sarabun", 0, 14)); // NOI18N
+        jLabel17.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel17.setText("  อายุ");
+        jPanel3.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 180, -1, -1));
+
+        jLabel18.setFont(new java.awt.Font("Sarabun", 0, 14)); // NOI18N
+        jLabel18.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel18.setText("  อาการ");
+        jPanel3.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 300, -1, -1));
+
+        jLabel19.setFont(new java.awt.Font("Sarabun", 0, 14)); // NOI18N
+        jLabel19.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel19.setText("เบอร์โทรติดต่อ");
+        jPanel3.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, -1, -1));
+
+        jLabel20.setFont(new java.awt.Font("Sarabun", 0, 14)); // NOI18N
+        jLabel20.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel20.setText("รหัสผู้ป่วย");
+        jPanel3.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, -1, -1));
+
+        input_tel1.setFont(new java.awt.Font("Sarabun", 0, 14)); // NOI18N
+        input_tel1.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        input_tel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 1));
+        jPanel3.add(input_tel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 340, 150, 25));
+
+        input_symptom1.setFont(new java.awt.Font("Sarabun", 0, 14)); // NOI18N
+        input_symptom1.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        input_symptom1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 1));
+        jPanel3.add(input_symptom1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 300, 150, 25));
+
+        input_height1.setFont(new java.awt.Font("Sarabun", 0, 14)); // NOI18N
+        input_height1.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        input_height1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 1));
+        jPanel3.add(input_height1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 260, 150, 25));
+
+        input_weight1.setFont(new java.awt.Font("Sarabun", 0, 14)); // NOI18N
+        input_weight1.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        input_weight1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 1));
+        jPanel3.add(input_weight1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 220, 150, 25));
+
+        input_age1.setFont(new java.awt.Font("Sarabun", 0, 14)); // NOI18N
+        input_age1.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        input_age1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 1));
+        jPanel3.add(input_age1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 180, 150, 25));
+
+        input_id.setEditable(false);
+        input_id.setFont(new java.awt.Font("Sarabun", 0, 14)); // NOI18N
+        input_id.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        input_id.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 1));
+        jPanel3.add(input_id, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 100, 150, 25));
+
+        jLabel21.setFont(new java.awt.Font("Sarabun", 0, 14)); // NOI18N
+        jLabel21.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel21.setText("ชื่อ-นามสกุล");
+        jPanel3.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, -1, -1));
+
+        input_name1.setFont(new java.awt.Font("Sarabun", 0, 14)); // NOI18N
+        input_name1.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        input_name1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 1));
+        jPanel3.add(input_name1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 140, 150, 25));
+
+        btn_update.setBackground(new java.awt.Color(153, 0, 153));
+        btn_update.setFont(new java.awt.Font("Sarabun", 0, 14)); // NOI18N
+        btn_update.setForeground(new java.awt.Color(255, 255, 255));
+        btn_update.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icons8_add_database_40px.png"))); // NOI18N
+        btn_update.setText("แก้ไขข้อมูล");
+        btn_update.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        btn_update.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_update.setFocusPainted(false);
+        btn_update.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_updateMouseClicked(evt);
+            }
+        });
+        jPanel3.add(btn_update, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 390, 150, 50));
+
+        btn_delete.setBackground(new java.awt.Color(153, 0, 153));
+        btn_delete.setFont(new java.awt.Font("Sarabun", 0, 14)); // NOI18N
+        btn_delete.setForeground(new java.awt.Color(255, 255, 255));
+        btn_delete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icons8_delete_64px_1.png"))); // NOI18N
+        btn_delete.setText("ลบข้อมูล   ");
+        btn_delete.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        btn_delete.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_delete.setFocusPainted(false);
+        btn_delete.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_deleteMouseClicked(evt);
+            }
+        });
+        jPanel3.add(btn_delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 460, 150, 50));
+
+        panel_manage.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 170, 310, 570));
+
+        getContentPane().add(panel_manage, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1100, 750));
+
+        panel_menu.setBackground(new java.awt.Color(21, 1, 70));
+        panel_menu.setMinimumSize(new java.awt.Dimension(1100, 750));
+        panel_menu.setPreferredSize(new java.awt.Dimension(1100, 750));
+        panel_menu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel1.setFont(new java.awt.Font("Impact", 1, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("HOSPITAL    SYSTEM");
+        panel_menu.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 80, -1, -1));
+
+        btn_manage.setBackground(new java.awt.Color(255, 255, 255));
+        btn_manage.setFont(new java.awt.Font("Sarabun", 0, 18)); // NOI18N
+        btn_manage.setText("จัดการข้อมูลผู้ป่วย");
+        btn_manage.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_manage.setFocusPainted(false);
+        btn_manage.setRequestFocusEnabled(false);
+        btn_manage.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_manageMouseClicked(evt);
+            }
+        });
+        panel_menu.add(btn_manage, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 320, 240, 170));
+
+        btn_dashboard.setBackground(new java.awt.Color(255, 255, 255));
+        btn_dashboard.setFont(new java.awt.Font("Sarabun", 0, 18)); // NOI18N
+        btn_dashboard.setText("แดชบอร์ด");
+        btn_dashboard.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_dashboard.setFocusPainted(false);
+        btn_dashboard.setRequestFocusEnabled(false);
+        btn_dashboard.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_dashboardMouseClicked(evt);
+            }
+        });
+        panel_menu.add(btn_dashboard, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 320, 240, 170));
+
+        btn_history.setBackground(new java.awt.Color(255, 255, 255));
+        btn_history.setFont(new java.awt.Font("Sarabun", 0, 18)); // NOI18N
+        btn_history.setText("ประวัติการใช้งาน");
+        btn_history.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_history.setFocusPainted(false);
+        btn_history.setRequestFocusEnabled(false);
+        btn_history.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_historyMouseClicked(evt);
+            }
+        });
+        panel_menu.add(btn_history, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 320, 240, 170));
+
+        getContentPane().add(panel_menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1100, 750));
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void btn_dashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_dashboardMouseClicked
+        panel_menu.setVisible(false);
+        panel_dashboard.setVisible(true);
+        panel_manage.setVisible(false);
+        panel_history.setVisible(false);
+    }//GEN-LAST:event_btn_dashboardMouseClicked
+
+    private void btn_manageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_manageMouseClicked
+        panel_menu.setVisible(false);
+        panel_dashboard.setVisible(false);
+        panel_manage.setVisible(true);
+        panel_history.setVisible(false);
+    }//GEN-LAST:event_btn_manageMouseClicked
+
+    private void btn_historyMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_historyMouseClicked
+        panel_menu.setVisible(false);
+        panel_dashboard.setVisible(false);
+        panel_manage.setVisible(false);
+        panel_history.setVisible(true);
+    }//GEN-LAST:event_btn_historyMouseClicked
+
+    private void btn_homeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_homeMouseClicked
+        go_home();
+        table_manage.clearSelection();
+    }//GEN-LAST:event_btn_homeMouseClicked
+
+    private void btn_home1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_home1MouseClicked
+        go_home();
+    }//GEN-LAST:event_btn_home1MouseClicked
+
+    private void btn_home2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_home2MouseClicked
+        go_home();
+        table_dashboard.clearSelection();
+    }//GEN-LAST:event_btn_home2MouseClicked
+
+    private void btn_addMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_addMouseClicked
+        PreparedStatement pt = null;
+        try {
+            String sql = "INSERT INTO patient (name, age, weight, height, symptom, tel) VALUES ('"+input_name.getText()+"'"
+                    + ", "+input_age.getText()+", "+input_weight.getText()+", "+input_height.getText()+", '"+input_symptom.getText()+"', '"+input_tel.getText()+"') ";
+            pt = conn.prepareStatement(sql);
+            pt.execute();
+            
+            input_name.setText("");
+            input_age.setText("");
+            input_weight.setText("");
+            input_height.setText("");
+            input_symptom.setText("");
+            input_tel.setText("");
+            
+            initTableDashboard();
+            initTableManage();
+        } catch (SQLException ex) {
+            System.out.println("error");
+        }
+    }//GEN-LAST:event_btn_addMouseClicked
+
+    private void panel_dashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel_dashboardMouseClicked
+        table_dashboard.clearSelection();
+        btn_checkout.setVisible(false);
+    }//GEN-LAST:event_panel_dashboardMouseClicked
+
+    private void btn_updateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_updateMouseClicked
+        PreparedStatement pt = null;
+        try {
+            int id = 0;
+            if(!table_manage.getSelectionModel().isSelectionEmpty()) id = Integer.parseInt((String) table_manage.getValueAt(table_manage.getSelectedRow(), 0));
+            
+            String sql = "UPDATE patient SET name='"+input_name1.getText()+"', age="+input_age1.getText()+", weight="+input_weight1.getText()+""
+                    + ", height="+input_height1.getText()+", symptom='"+input_symptom1.getText()+"', tel='"+input_tel1.getText()+"' WHERE id="+id+"";
+            pt = conn.prepareStatement(sql);
+            pt.execute();
+            
+            initTableManage();
+            initTableDashboard();
+        } catch (SQLException ex) {
+            System.out.println("error");
+        }
+    }//GEN-LAST:event_btn_updateMouseClicked
+
+    private void panel_manageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel_manageMouseClicked
+        table_manage.clearSelection();
+    }//GEN-LAST:event_panel_manageMouseClicked
+
+    private void table_manageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table_manageMouseClicked
+        Statement st;
+        ResultSet rs;
+        try {
+            DefaultTableModel dt = (DefaultTableModel) table_manage.getModel();
+
+            int id = 0;
+            if(!table_manage.getSelectionModel().isSelectionEmpty()) id = Integer.parseInt((String) table_manage.getValueAt(table_manage.getSelectedRow(), 0));
+            
+            st = (Statement) conn.createStatement();
+            String sql = "SELECT * FROM patient WHERE id="+id+"";
+            rs = st.executeQuery(sql);
+
+            while (rs.next()) {
+                input_id.setText(rs.getString("id"));
+                input_name1.setText(rs.getString("name"));
+                input_age1.setText(rs.getString("age"));
+                input_weight1.setText(rs.getString("weight"));
+                input_height1.setText(rs.getString("height"));
+                input_symptom1.setText(rs.getString("symptom"));
+                input_tel1.setText(rs.getString("tel"));
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }//GEN-LAST:event_table_manageMouseClicked
+
+    private void btn_deleteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_deleteMouseClicked
+        PreparedStatement pt = null;
+        try {
+            int id = 0;
+            if(!table_manage.getSelectionModel().isSelectionEmpty()) id = Integer.parseInt((String) table_manage.getValueAt(table_manage.getSelectedRow(), 0));
+            
+            String sql = "DELETE FROM patient WHERE id="+id+"";
+            pt = conn.prepareStatement(sql);
+            pt.execute();
+            
+            initTableManage();
+            initTableDashboard();
+        } catch (SQLException ex) {
+            System.out.println("error");
+        }
+    }//GEN-LAST:event_btn_deleteMouseClicked
+
+    private void btn_checkoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_checkoutMouseClicked
+        PreparedStatement pt = null;
+        Statement st;
+        ResultSet rs;
+        
+        try {
+            int id = 0;
+            if(!table_dashboard.getSelectionModel().isSelectionEmpty()) id = Integer.parseInt((String) table_dashboard.getValueAt(table_dashboard.getSelectedRow(), 0));
+            String name = (String) table_dashboard.getValueAt(table_dashboard.getSelectedRow(), 1);
+            
+            String sql = "UPDATE checkout SET id="+id+", name='"+name+"' WHERE 1=1 ";
+            pt = conn.prepareStatement(sql);
+            pt.execute();
+                        
+            st = (Statement) conn.createStatement();
+            sql = "SELECT * FROM patient WHERE id="+id+"";
+            rs = st.executeQuery(sql);
+
+            while(rs.next()){
+                sql = "INSERT INTO history (id, name, age, weight, height, symptom, tel)"
+                        + "VALUES ("+id+", '"+rs.getString("name")+"', "+rs.getString("age")+", "+rs.getString("weight")+", "+rs.getString("height")+""
+                        + ", '"+rs.getString("symptom")+"', '"+rs.getString("tel")+"')";
+                pt = conn.prepareStatement(sql);
+                pt.execute();
+            }
+            
+            sql = "DELETE FROM patient WHERE id="+id+"";
+            pt = conn.prepareStatement(sql);
+            pt.execute();
+            
+            new pay().setVisible(true);
+            initTableDashboard();
+            initTableManage();
+            initTableHistory();
+        } catch (SQLException ex) {
+            System.out.println("error");
+        }
+    }//GEN-LAST:event_btn_checkoutMouseClicked
+
+    private void table_dashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table_dashboardMouseClicked
+        btn_checkout.setVisible(true);
+    }//GEN-LAST:event_table_dashboardMouseClicked
+
+    private void table_historyMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table_historyMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_table_historyMouseClicked
+
+    private void go_home(){
+        panel_menu.setVisible(true);
+        panel_dashboard.setVisible(false);
+        panel_manage.setVisible(false);
+        panel_history.setVisible(false);
+    }
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(Main_dashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(Main_dashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(Main_dashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Main_dashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Main_dashboard().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_add;
+    private javax.swing.JButton btn_checkout;
+    private javax.swing.JButton btn_dashboard;
+    private javax.swing.JButton btn_delete;
+    private javax.swing.JButton btn_history;
+    private javax.swing.JButton btn_home;
+    private javax.swing.JButton btn_home1;
+    private javax.swing.JButton btn_home2;
+    private javax.swing.JButton btn_manage;
+    private javax.swing.JButton btn_update;
+    private javax.swing.JTextField input_age;
+    private javax.swing.JTextField input_age1;
+    private javax.swing.JTextField input_height;
+    private javax.swing.JTextField input_height1;
+    private javax.swing.JTextField input_id;
+    private javax.swing.JTextField input_name;
+    private javax.swing.JTextField input_name1;
+    private javax.swing.JTextField input_symptom;
+    private javax.swing.JTextField input_symptom1;
+    private javax.swing.JTextField input_tel;
+    private javax.swing.JTextField input_tel1;
+    private javax.swing.JTextField input_weight;
+    private javax.swing.JTextField input_weight1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JPanel panel_dashboard;
+    private javax.swing.JPanel panel_history;
+    private javax.swing.JPanel panel_manage;
+    private javax.swing.JPanel panel_menu;
+    private javax.swing.JTable table_dashboard;
+    private javax.swing.JTable table_history;
+    private javax.swing.JTable table_manage;
+    // End of variables declaration//GEN-END:variables
+}
